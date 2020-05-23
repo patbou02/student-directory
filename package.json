@@ -1,0 +1,15 @@
+{
+  "name": "student_directory",
+  "version": "1.0.0",
+  "description": "Student directory application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Arun Sood",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "faker": "^4.1.0"
+  }
+}
