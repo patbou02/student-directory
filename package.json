@@ -4,7 +4,10 @@
   "description": "Student directory application",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "build": "webpack --config webpack.config.js",
+    "server": "node index.js",
+    "server_reload": "webpack-dev-server --mode-development",
+    "start": "npm run build && npm run server"
   },
   "author": "Arun Sood",
   "dependencies": {
