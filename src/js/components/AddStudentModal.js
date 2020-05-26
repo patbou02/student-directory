@@ -1,8 +1,11 @@
+import firebaseInstance from "../../../firebase_config";
+import $ from 'jquery';
+
 const AddStudentModal = () => {
 
   const modalHTML = () => {
     return `
-      <div class="modal fade" id="directory-new-student-modal">
+      <form class="modal fade" id="directory-new-student-modal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -27,15 +30,42 @@ const AddStudentModal = () => {
             </div>
             <div class="modal-footer">
               <a type="button" class="btn btn-secondary" data-dismiss="modal">Close</a>
-              <a id="save-student" href="" type="button" class="btn btn-primary">Save Student</a>
+              <button id="save-student" type="submit" class="btn btn-primary">Save Student</button>
             </div>
           </div>
         </div>
-      </div><!--/ #directory-new-student-modal -->
+      </form><!--/ #directory-new-student-modal -->
     `;
   };
 
   document.querySelector('#app').innerHTML += modalHTML();
+
+  const newStudentModal = document.querySelector('#directory-new-student-modal');
+
+  newStudentModal.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const newStudent = {
+      firstName : document.querySelector('#first-name').value,
+      lastName  : document.querySelector('#last-name').value,
+      email     : document.querySelector('#email').value,
+      avatar    : document.querySelector('#avatar-link').value,
+      city      : document.querySelector('#city').value,
+      state     : document.querySelector('#state').value,
+    };
+
+    // Create (POST) new student in 'student' table
+    firebaseInstance.ref('students').push(newStudent)
+    .then(()=> {
+      // On successful ADD/POST operation
+      newStudentModal.reset(); // reset form field
+      $('#directory-new-student-modal').modal('hide');
+    })
+    .catch(() => {
+      // On failed ADD/POST operation
+      console.log('Error adding new student into firebaseInstance');
+    });
+  });
 };
 
 export default AddStudentModal;
