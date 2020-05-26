@@ -1,3 +1,5 @@
+import AddStudentModal from "../components/AddStudentModal";
+
 const ViewStudents = () => {
 
   const directoryContainerHTML = () => {
@@ -71,6 +73,11 @@ const ViewStudents = () => {
   };
 
   document.querySelector('#app').innerHTML = directoryContainerHTML();
+
+  document.querySelector('#add-student').addEventListener('click', (e) => {
+    e.preventDefault();
+    AddStudentModal();
+  });
 };
 
 export default ViewStudents;
