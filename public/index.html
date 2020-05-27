@@ -12,6 +12,7 @@
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/app.js"></script>
+
   </head>
   <body>
 
@@ -19,49 +20,29 @@
       <h2>Student Directory</h2>
 
       <div>
-        <a href="" data-target="#directory-new-student-modal" data-toggle="modal">Add student +</a>
+        <a href="" id="add-student" data-target="#directory-new-student-modal" data-toggle="modal">Add student +</a>
       </div>
 
       <input type="text" class="form-control directory-search-input" placeholder="Search by name" />
 
-      <div class="row">
+      <div class="row row-outer">
         <div class="col-lg-3">
           <div class="card directory-card">
             <img class="card-img-top" src="/img/sam.jpg" />
-
             <div class="card-body">
               <h5 class="card-title">Sam Wessin</h5>
-
-              <p class="card-text">
-                <div>
-                  sam.wessin@gmail.com
-                </div>
-                <div>
-                  Orange County, CA
-                </div>
-              </p>
-
+              <p class="card-text">sam.wessin@gmail.com<br />Orange County, CA</p>
               <a href="#" class="btn btn-secondary">Edit Sam</a>
             </div>
-          </div>
+          </div><!--/ .directory-card -->
         </div>
 
         <div class="col-lg-3">
           <div class="card directory-card">
             <img class="card-img-top" src="/img/peter.jpg" />
-
             <div class="card-body">
               <h5 class="card-title">Peter Landers</h5>
-
-              <p class="card-text">
-                <div>
-                  peter.landers@gmail.com
-                </div>
-                <div>
-                  Henderson, NV
-                </div>
-              </p>
-
+              <p class="card-text">peter.landers@gmail.com<br />Henderson, NV</p>
               <a href="#" class="btn btn-secondary">Edit Peter</a>
             </div>
           </div>
@@ -70,19 +51,9 @@
         <div class="col-lg-3">
           <div class="card directory-card">
             <img class="card-img-top" src="/img/josh.jpg" />
-
             <div class="card-body">
               <h5 class="card-title">Josh Sproutz</h5>
-
-              <p class="card-text">
-                <div>
-                  josh.sproutz@gmail.com
-                </div>
-                <div>
-                  Charleston, SC
-                </div>
-              </p>
-
+              <p class="card-text">josh.sproutz@gmail.com<br />Charleston, SC</p>
               <a href="#" class="btn btn-secondary">Edit Josh</a>
             </div>
           </div>
@@ -91,24 +62,14 @@
         <div class="col-lg-3">
           <div class="card directory-card">
             <img class="card-img-top" src="/img/amanda.jpg" />
-
             <div class="card-body">
               <h5 class="card-title">Amanda Pulson</h5>
-
-              <p class="card-text">
-                <div>
-                  amanda.pulson@gmail.com
-                </div>
-                <div>
-                  Atlanta, GA
-                </div>
-              </p>
-
+              <p class="card-text">amanda.pulson@gmail.com<br />Atlanta, GA</p>
               <a href="#" class="btn btn-secondary">Edit Amanda</a>
             </div>
           </div>
         </div>
-      </div>
+      </div><!--/ .row-outer -->
 
       <nav class="directory-pagination">
         <ul class="pagination">
@@ -117,9 +78,9 @@
           <li class="page-item"><a class="page-link" href="#">2</a></li>
           <li class="page-item"><a class="page-link" href="#">3</a></li>
           <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-      </nav>
-    </div>
+        </ul><!--/ .pagination -->
+      </nav><!--/ .directory-pagination -->
+    </div><!--/ .directory-container -->
 
     <div class="modal fade" id="directory-new-student-modal">
       <div class="modal-dialog">
@@ -131,49 +92,26 @@
             </button>
           </div>
           <div class="modal-body">
-            <div class="font-weight-bold new-student-titles">
-              First Name
-            </div>
-
-            <input type="text" class="form-control new-student-inputs" />
-
-            <div class="font-weight-bold new-student-titles">
-              Last Name
-            </div>
-
-            <input type="text" class="form-control new-student-inputs" />
-
-            <div class="font-weight-bold new-student-titles">
-              Email
-            </div>
-
-            <input type="email" class="form-control new-student-inputs" />
-
-            <div class="font-weight-bold new-student-titles">
-              Avatar Link
-            </div>
-
-            <input type="text" class="form-control new-student-inputs" />
-
-            <div class="font-weight-bold new-student-titles">
-              City
-            </div>
-
-            <input type="text" class="form-control new-student-inputs" />
-
-            <div class="font-weight-bold new-student-titles">
-              State
-            </div>
-
-            <input type="text" class="form-control new-student-inputs" />
+            <label for="first-name" class="font-weight-bold new-student-titles mb-0">First Name</label>
+            <input id="first-name" name="first-name" type="text" class="form-control new-student-inputs mt-0" />
+            <label for="last-name" class="font-weight-bold new-student-titles mb-0">Last Name</label>
+            <input id="last-name" name="last-name" type="text" class="form-control new-student-inputs mt-0" />
+            <label for="email" class="font-weight-bold new-student-titles mb-0">Email</label>
+            <input id="email" name="email" type="email" class="form-control new-student-inputs mt-0" />
+            <label for="avatar-link" class="font-weight-bold new-student-titles mb-0">Avatar Link</label>
+            <input id="avatar-link" name="avatar-link" type="text" class="form-control new-student-inputs mt-0" />
+            <label for="city" class="font-weight-bold new-student-titles mb-0">City</label>
+            <input id="city" name="city" type="text" class="form-control new-student-inputs mt-0" />
+            <label for="state" class="font-weight-bold new-student-titles mb-0">State</label>
+            <input id="state" name="state" type="text" class="form-control new-student-inputs mt-0" />
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save Student</button>
+            <a type="button" class="btn btn-secondary" data-dismiss="modal">Close</a>
+            <a id="save-student" href="" type="button" class="btn btn-primary">Save Student</a>
           </div>
         </div>
       </div>
-    </div>
+    </div><!--/ #directory-new-student-modal -->
 
   </body>
 </html>
