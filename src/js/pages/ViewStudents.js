@@ -1,4 +1,6 @@
 import AddStudentModal from "../components/AddStudentModal";
+import firebaseInstance from "../../../firebase_config";
+import StudentCard from "../components/StudentCard";
 
 const ViewStudents = () => {
 
@@ -12,52 +14,7 @@ const ViewStudents = () => {
             <input type="text" class="form-control directory-search-input mt-3" placeholder="Search by name" />
           </div>
         </div>
-  
-        <div class="row row-outer mb-3">
-          <div class="col-lg-3">
-            <div class="card directory-card">
-              <img class="card-img-top" src="/img/sam.jpg" />
-              <div class="card-body">
-                <h5 class="card-title">Sam Wessin</h5>
-                <p class="card-text">sam.wessin@gmail.com<br />Orange County, CA</p>
-                <a href="#" class="btn btn-secondary">Edit Sam</a>
-              </div>
-            </div><!--/ .directory-card -->
-          </div>
-  
-          <div class="col-lg-3">
-            <div class="card directory-card">
-              <img class="card-img-top" src="/img/peter.jpg" />
-              <div class="card-body">
-                <h5 class="card-title">Peter Landers</h5>
-                <p class="card-text">peter.landers@gmail.com<br />Henderson, NV</p>
-                <a href="#" class="btn btn-secondary">Edit Peter</a>
-              </div>
-            </div>
-          </div>
-  
-          <div class="col-lg-3">
-            <div class="card directory-card">
-              <img class="card-img-top" src="/img/josh.jpg" />
-              <div class="card-body">
-                <h5 class="card-title">Josh Sproutz</h5>
-                <p class="card-text">josh.sproutz@gmail.com<br />Charleston, SC</p>
-                <a href="#" class="btn btn-secondary">Edit Josh</a>
-              </div>
-            </div>
-          </div>
-  
-          <div class="col-lg-3">
-            <div class="card directory-card">
-              <img class="card-img-top" src="/img/amanda.jpg" />
-              <div class="card-body">
-                <h5 class="card-title">Amanda Pulson</h5>
-                <p class="card-text">amanda.pulson@gmail.com<br />Atlanta, GA</p>
-                <a href="#" class="btn btn-secondary">Edit Amanda</a>
-              </div>
-            </div>
-          </div>
-        </div><!--/ .row-outer -->
+        <div class="directory-contents"></div><!--/ .directory-contents -->
   
         <nav class="row directory-pagination">
           <ul class="pagination col-4 offset-4">
@@ -77,6 +34,47 @@ const ViewStudents = () => {
   document.querySelector('#add-student').addEventListener('click', (e) => {
     e.preventDefault();
     AddStudentModal();
+  });
+
+  const chunkCardsArray = (arr, size) => {
+    let chunkedHTML = '';
+    const chunked_arr = [];
+    for (let i = 0; i <= arr.length; i++) {
+      const last = chunked_arr[chunked_arr.length - 1];
+      if (i === 0) {
+        chunkedHTML += `<div class="row row-outer mb-3">`;
+      } else if (i % size === 0) {
+        chunkedHTML += `</div></div><div class="row row-outer mb-3">`;
+      }
+      if (!last || last.length === size) {
+        chunked_arr.push([arr[i]]);
+        chunkedHTML += `<div class="col-lg-${Math.floor(12 / size)}">${arr[i]}`;
+        chunkedHTML += ((i + 1) % size === 0) ? '</div></div>' : '</div>';
+      } else {
+        if (i < arr.length) {
+          last.push(arr[i]);
+          chunkedHTML += `<div class="col-lg-${Math.floor(12 / size)}">${arr[i]}`;
+        }
+        chunkedHTML += ((i + 1) % size === 0) ? '</div></div>' : '</div>';
+      }
+    }
+    return chunkedHTML;
+  };
+
+  // set READ/GET operation to get existing Students from the 'students' table
+  firebaseInstance.ref('students').on('value', (results) => {
+    const resultsObj = results.val();
+
+    let listOfStudents = [];
+
+    // Loop thru list of Objects
+    for (let key in resultsObj) {
+      // Populate array with HTML for every single student card
+      listOfStudents.push(StudentCard(resultsObj[key], key));
+    }
+
+    document.querySelector('.directory-contents').innerHTML = chunkCardsArray(listOfStudents, 4);
+
   });
 };
 
