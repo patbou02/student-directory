@@ -6,9 +6,11 @@ import '../scss/style.scss';
 
 // Load Route Modules
 import ViewStudents from './pages/ViewStudents';
+import EditStudent from "./pages/EditStudent";
 
 const routes = {
   '/view' : ViewStudents,
+  '/edit' : EditStudent,
 };
 
 document.addEventListener('DOMContentLoaded', () => {
