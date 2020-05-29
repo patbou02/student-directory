@@ -1,7 +1,6 @@
 import AddStudentModal from "../components/AddStudentModal";
 import firebaseInstance from "../../../firebase_config";
 import StudentCard from "../components/StudentCard";
-import EditStudent from "./EditStudent";
 
 const ViewStudents = () => {
 

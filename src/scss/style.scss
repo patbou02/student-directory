@@ -18,3 +18,26 @@ $gutter : 15px;
     }
   }
 }
+
+.directory-contents {
+  .col { display: flex; }
+  .directory-card { flex-grow: 1; }
+  .card-body {
+    position: relative;
+    min-height: 178px;
+    a {
+      position: absolute;
+      bottom: 1.25rem;
+    }
+  }
+}
+
+.student-content {
+  .col,
+  .col-md-6,
+  .col-xl-4,
+  .col-xl-8 {
+    padding-left: ($gutter / 2);
+    padding-right: ($gutter / 2);
+  }
+}
