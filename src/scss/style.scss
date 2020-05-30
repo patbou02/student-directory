@@ -19,13 +19,15 @@ $gutter : 15px;
   }
 }
 
-.directory-contents {
+.directory-list {
+  padding: 0;
+  li { margin-bottom: 1.25rem; }
   .col { display: flex; }
   .directory-card { flex-grow: 1; }
   .card-body {
     position: relative;
     min-height: 178px;
-    a {
+    .btn-container {
       position: absolute;
       bottom: 1.25rem;
     }

@@ -17,7 +17,7 @@ const ViewStudents = () => {
           </div>
         </header><!--/ .directory-header -->
         
-        <div class="directory-contents"></div><!--/ .directory-contents -->
+        <ul class="directory-list"></ul><!--/ .directory-list -->
   
         <footer class="directory-pagination row mt-4 mb-5">
           <nav class="pagination col-4 offset-4">
@@ -50,45 +50,30 @@ const ViewStudents = () => {
     }
   });
 
-  const chunkCardsArray = (arr, size) => {
-    let chunkedHTML = '';
-    let rowClasses = `row row-outer mb-3 row-cols-${size/size} row-cols-sm-${size - (size/2)} row-cols-md-${size - (size/size)} row-cols-lg-${size}`;
-    const chunked_arr = [];
-    for (let i = 0; i <= arr.length; i++) {
-      const last = chunked_arr[chunked_arr.length - 1];
-      if (i === 0) {
-        chunkedHTML += `<div class="${rowClasses}">`;
-      } else if (i % size === 0) {
-        chunkedHTML += `</div></div><div class="${rowClasses}">`;
-      }
-      if (!last || last.length === size) {
-        chunked_arr.push([arr[i]]);
-        chunkedHTML += `<div class="col">${arr[i]}`;
-        chunkedHTML += ((i + 1) % size === 0) ? '</div></div>' : '</div>';
-      } else {
-        if (i < arr.length) {
-          last.push(arr[i]);
-          chunkedHTML += `<div class="col">${arr[i]}`;
-        }
-        chunkedHTML += ((i + 1) % size === 0) ? '</div></div>' : '</div>';
-      }
+  const buildListOfCards = (arr, size) => {
+    let listHTML = '';
+    let listClasses = ` row row-outer mb-3 row-cols-${size/size} row-cols-sm-${size - (size/2)} row-cols-md-${size - (size/size)} row-cols-lg-${size}`;
+    for (let i = 0; i < arr.length; i++) {
+      listHTML += `<li class="col">${arr[i]}</li>`;
     }
-    return chunkedHTML;
+    return [listHTML, listClasses];
   };
 
   // set READ/GET operation to get existing Students from the 'students' table
   firebaseInstance.ref('students').on('value', (results) => {
     const resultsObj = results.val();
 
-    let listOfStudents = [];
+    let studentsList = [];
+    const studentsListElem = document.querySelector('.directory-list');
 
     // Loop thru list of Objects
     for (let key in resultsObj) {
       // Populate array with HTML for every single student card
-      listOfStudents.push(StudentCard(resultsObj[key], key));
+      studentsList.push(StudentCard(resultsObj[key], key));
     }
 
-    document.querySelector('.directory-contents').innerHTML = chunkCardsArray(listOfStudents, 4);
+    studentsListElem.className += buildListOfCards(studentsList, 4)[1];
+    studentsListElem.innerHTML = buildListOfCards(studentsList, 4)[0];
 
   });
 };
