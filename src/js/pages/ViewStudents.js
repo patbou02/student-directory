@@ -48,6 +48,21 @@ const ViewStudents = () => {
       // 2. reset hash to /edit and trigger 'hashchange' event handler
       window.location.hash = '/edit';
     }
+
+    // Delete button clicks
+    if (e.target.classList.contains('btn-delete')) {
+      e.preventDefault();
+      let studentId = e.target.id;
+
+      // DELETE operation on single record
+      firebaseInstance.ref('students')
+      .child(studentId)
+      .remove()
+      .catch(() => {
+        // On failed DELETE operation
+        console.error('Error deleting student.');
+      });
+    }
   });
 
   const buildListOfCards = (arr, size) => {

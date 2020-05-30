@@ -63,7 +63,7 @@ const AddStudentModal = () => {
     })
     .catch(() => {
       // On failed ADD/POST operation
-      console.log('Error adding new student into firebaseInstance');
+      console.error('Error adding new student into firebaseInstance');
     });
   });
 };
