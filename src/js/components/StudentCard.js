@@ -6,7 +6,10 @@ const StudentCard = (obj, objKey) => {
       <div class="card-body">
         <h5 class="card-title">${obj.firstName} ${obj.lastName}</h5>
         <p class="card-text">${obj.email}<br />${obj.city}, ${obj.state}</p>
-        <a href="#/edit" id="${objKey}" class="btn btn-secondary">Edit ${obj.firstName}</a>
+        <div class="btn-container">
+          <a href="#/edit" type="button" id="${objKey}" class="btn btn-secondary">Edit</a>
+          <button type="button" id="${objKey}" class="btn btn-danger btn-delete">Delete</button>
+        </div>
       </div>
     </div><!--/ .directory-card -->
   `;
