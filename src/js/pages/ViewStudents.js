@@ -1,6 +1,7 @@
 import AddStudentModal from "../components/AddStudentModal";
 import firebaseInstance from "../../../firebase_config";
 import StudentCard from "../components/StudentCard";
+import Pagination from "../components/Pagination";
 
 const ViewStudents = () => {
 
@@ -12,22 +13,24 @@ const ViewStudents = () => {
             <div class="col">
               <h2>Student Directory</h2>
               <a href="#" id="add-student" data-target="#directory-new-student-modal" data-toggle="modal">Add student +</a>
-              <input type="text" class="form-control directory-search-input mt-3" placeholder="Search by name" />
+              <div class="input-group mt-3 row no-gutters">
+                <div class="input-group-prepend col-9">
+                  <input type="text" class="form-control directory-search-input" placeholder="Search by name" />
+                </div>
+                <select class="custom-select filter-select dropdown-menu" aria-label="Select to filter by">
+                  <option class="dropdown-item" selected>Filter by</option>
+                  <option class="dropdown-item" value="3">3</option>
+                  <option class="dropdown-item" value="5">5</option>
+                  <option class="dropdown-item" value="8">8</option>
+                </select>
+              </div>
             </div>
           </div>
         </header><!--/ .directory-header -->
         
-        <ul class="directory-list"></ul><!--/ .directory-list -->
+        <main class="directory-list"></main><!--/ .directory-list -->
   
-        <footer class="directory-pagination row mt-4 mb-5">
-          <nav class="pagination col-4 offset-4">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-          </nav><!--/ .pagination -->
-        </footer><!--/ .directory-pagination -->
+        <nav class="directory-pagination mt-4 mb-5" aria-label="Page Navigation"></nav><!--/ .directory-pagination -->
       </div><!--/ .directory-wrapper -->
     `;
   };
@@ -67,11 +70,13 @@ const ViewStudents = () => {
 
   const buildListOfCards = (arr, size) => {
     let listHTML = '';
-    let listClasses = ` row row-outer mb-3 row-cols-${size/size} row-cols-sm-${size - (size/2)} row-cols-md-${size - (size/size)} row-cols-lg-${size}`;
+    let listClasses = `row row-outer mb-3 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5`;
     for (let i = 0; i < arr.length; i++) {
+      listHTML += (i === 0) ? `<ul class="${listClasses}">` : '';
       listHTML += `<li class="col">${arr[i]}</li>`;
+      listHTML += (i === (arr.length - 1)) ? '</ul>' : '';
     }
-    return [listHTML, listClasses];
+    return listHTML;
   };
 
   // set READ/GET operation to get existing Students from the 'students' table
@@ -79,7 +84,6 @@ const ViewStudents = () => {
     const resultsObj = results.val();
 
     let studentsList = [];
-    const studentsListElem = document.querySelector('.directory-list');
 
     // Loop thru list of Objects
     for (let key in resultsObj) {
@@ -87,9 +91,16 @@ const ViewStudents = () => {
       studentsList.push(StudentCard(resultsObj[key], key));
     }
 
-    studentsListElem.className += buildListOfCards(studentsList, 4)[1];
-    studentsListElem.innerHTML = buildListOfCards(studentsList, 4)[0];
+    // Build list for initial page load (no pagination needed)
+    document.querySelector('.directory-list').innerHTML = buildListOfCards(studentsList, 0);
 
+    // Listen for select list change event and update list of cards and pagination accordingly
+    document.querySelector('.filter-select').addEventListener('change', (e) => {
+
+      document.querySelector('.directory-list').innerHTML = buildListOfCards(studentsList, e.target.value);
+
+      Pagination(Object.keys(resultsObj).length, true, e.target.value);
+    });
   });
 };
 
