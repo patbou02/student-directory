@@ -20,7 +20,7 @@ $gutter : 15px;
 }
 
 .directory-list {
-  padding: 0;
+  ul { padding: 0; }
   li { margin-bottom: 1.25rem; }
   .col { display: flex; }
   .directory-card { flex-grow: 1; }
@@ -42,4 +42,9 @@ $gutter : 15px;
     padding-left: ($gutter / 2);
     padding-right: ($gutter / 2);
   }
+}
+
+.directory-pagination {
+  display: flex;
+  justify-content: center;
 }
