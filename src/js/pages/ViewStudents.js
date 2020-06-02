@@ -2,6 +2,7 @@ import AddStudentModal from "../components/AddStudentModal";
 import firebaseInstance from "../../../firebase_config";
 import StudentCard from "../components/StudentCard";
 import Pagination from "../components/Pagination";
+import BuildLists from "../components/BuildLists";
 
 const ViewStudents = () => {
 
@@ -19,9 +20,9 @@ const ViewStudents = () => {
                 </div>
                 <select class="custom-select filter-select dropdown-menu" aria-label="Select to filter by">
                   <option class="dropdown-item" selected>Filter by</option>
-                  <option class="dropdown-item" value="3">3</option>
                   <option class="dropdown-item" value="5">5</option>
-                  <option class="dropdown-item" value="8">8</option>
+                  <option class="dropdown-item" value="10">10</option>
+                  <option class="dropdown-item" value="25">25</option>
                 </select>
               </div>
             </div>
@@ -68,38 +69,51 @@ const ViewStudents = () => {
     }
   });
 
-  const buildListOfCards = (arr, size) => {
-    let listHTML = '';
-    let listClasses = `row row-outer mb-3 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5`;
-    for (let i = 0; i < arr.length; i++) {
-      listHTML += (i === 0) ? `<ul class="${listClasses}">` : '';
-      listHTML += `<li class="col">${arr[i]}</li>`;
-      listHTML += (i === (arr.length - 1)) ? '</ul>' : '';
+  const buildChunkedList = (arr, chunks) => {
+    let chunked_arr = [];
+    if (chunks !== 0) {
+      for (let i = 0; i < arr.length; i++) {
+        const last = chunked_arr[chunked_arr.length - 1];
+        if (!last || last.length === chunks) {
+          chunked_arr.push([arr[i]]);
+        } else {
+          if (i < arr.length) {
+            last.push(arr[i]);
+          }
+        }
+      }
+    } else {
+      chunked_arr = arr;
     }
-    return listHTML;
+
+    return chunked_arr;
   };
 
   // set READ/GET operation to get existing Students from the 'students' table
   firebaseInstance.ref('students').on('value', (results) => {
     const resultsObj = results.val();
 
-    let studentsList = [];
+    let primaryListOfStudents = [];
 
     // Loop thru list of Objects
     for (let key in resultsObj) {
       // Populate array with HTML for every single student card
-      studentsList.push(StudentCard(resultsObj[key], key));
+      primaryListOfStudents.push(StudentCard(resultsObj[key], key));
     }
 
-    // Build list for initial page load (no pagination needed)
-    document.querySelector('.directory-list').innerHTML = buildListOfCards(studentsList, 0);
+    // 1. Build list for initial page load (no pagination needed)
+    document.querySelector('.directory-list').innerHTML = BuildLists(primaryListOfStudents);
 
-    // Listen for select list change event and update list of cards and pagination accordingly
+    // Listen for select list change event in order to chunk list and update pagination accordingly
     document.querySelector('.filter-select').addEventListener('change', (e) => {
 
-      document.querySelector('.directory-list').innerHTML = buildListOfCards(studentsList, e.target.value);
+      let chunkedListOfStudents = buildChunkedList(primaryListOfStudents, parseInt(e.target.value));
 
-      Pagination(Object.keys(resultsObj).length, true, e.target.value);
+      // Update list container with first index of chunked list
+      document.querySelector('.directory-list').innerHTML = BuildLists(chunkedListOfStudents[0]);
+
+      // Update pagination
+      Pagination(true, Object.keys(resultsObj).length, parseInt(e.target.value), chunkedListOfStudents);
     });
   });
 };
