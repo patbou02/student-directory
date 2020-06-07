@@ -3,6 +3,7 @@ import firebaseInstance from "../../../firebase_config";
 import StudentCard from "../components/StudentCard";
 import Pagination from "../components/Pagination";
 import BuildLists from "../components/BuildLists";
+import Search from "../components/Search";
 
 const ViewStudents = () => {
 
@@ -14,17 +15,7 @@ const ViewStudents = () => {
             <div class="col">
               <h2>Student Directory</h2>
               <a href="#" id="add-student" data-target="#directory-new-student-modal" data-toggle="modal">Add student +</a>
-              <div class="input-group mt-3 row no-gutters">
-                <div class="input-group-prepend col-9">
-                  <input type="text" class="form-control directory-search-input" placeholder="Search by name" />
-                </div>
-                <select class="custom-select filter-select dropdown-menu" aria-label="Select to filter by">
-                  <option class="dropdown-item" selected>Filter by</option>
-                  <option class="dropdown-item" value="5">5</option>
-                  <option class="dropdown-item" value="10">10</option>
-                  <option class="dropdown-item" value="25">25</option>
-                </select>
-              </div>
+              <div class="directory-search input-group mt-3 row no-gutters"></div><!--/ .directory-search -->
             </div>
           </div>
         </header><!--/ .directory-header -->
@@ -37,6 +28,9 @@ const ViewStudents = () => {
   };
 
   document.querySelector('#app').innerHTML = directoryWrapperHTML();
+
+  // Call search component
+  Search();
 
   document.querySelector('#add-student').addEventListener('click', (e) => {
     e.preventDefault();
