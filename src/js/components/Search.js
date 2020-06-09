@@ -1,6 +1,8 @@
 import firebaseInstance from "../../../firebase_config";
 import BuildLists from "./BuildLists";
 import StudentCard from "./StudentCard";
+import Pagination from "./Pagination";
+import ChunkLists from "./ChunkLists";
 
 const Search = () => {
 
@@ -20,10 +22,11 @@ const Search = () => {
 
   document.querySelector('.directory-search').innerHTML = searchHTML();
 
-
   const handleSearch = (e) => {
     // 1. Grab user entered text in search input field
     const searchValue = e.target.value;
+
+    const matchesObj = {};
 
     // 2. Create regex from this dynamically generated variable
     const searchRegex = new RegExp(searchValue, 'gi');
@@ -45,11 +48,26 @@ const Search = () => {
 
           // 7. Push card HTML into array of matches
           searchMatches.push(matchedStudent);
+
+          matchesObj[key] = resultsObj[key];
         }
       }
+
       // 8. Rebuild directory list with BuildLists() using array or matched results
       document.querySelector('.directory-list').innerHTML = BuildLists(searchMatches);
+
+      document.querySelector('.filter-select').addEventListener('change', (e) => {
+        let chunkedSearchMatches = ChunkLists(searchMatches, parseInt(e.target.value));
+
+        // Update list container with first index of chunked list
+        document.querySelector('.directory-list').innerHTML = BuildLists(chunkedSearchMatches[0]);
+
+        // Update pagination
+        Pagination(true, Object.keys(matchesObj).length, parseInt(e.target.value), chunkedSearchMatches);
+      });
     });
+
+    return matchesObj;
   };
 
   // Use oninput GlobalEventHandlers as seen in and call handleSearch()
