@@ -1,8 +1,7 @@
 import firebaseInstance from "../../../firebase_config";
-import BuildLists from "./BuildLists";
 import StudentCard from "./StudentCard";
 import Pagination from "./Pagination";
-import ChunkLists from "./ChunkLists";
+import Utilities from "./Utilities";
 
 const Search = () => {
 
@@ -54,13 +53,13 @@ const Search = () => {
       }
 
       // 8. Rebuild directory list with BuildLists() using array or matched results
-      document.querySelector('.directory-list').innerHTML = BuildLists(searchMatches);
+      document.querySelector('.directory-list').innerHTML = Utilities('build', searchMatches);
 
       document.querySelector('.filter-select').addEventListener('change', (e) => {
-        let chunkedSearchMatches = ChunkLists(searchMatches, parseInt(e.target.value));
+        let chunkedSearchMatches = Utilities('chunk', searchMatches, parseInt(e.target.value));
 
         // Update list container with first index of chunked list
-        document.querySelector('.directory-list').innerHTML = BuildLists(chunkedSearchMatches[0]);
+        document.querySelector('.directory-list').innerHTML = Utilities('build', chunkedSearchMatches[0]);
 
         // Update pagination
         Pagination(true, Object.keys(matchesObj).length, parseInt(e.target.value), chunkedSearchMatches);

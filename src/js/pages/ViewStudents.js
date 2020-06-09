@@ -2,8 +2,7 @@ import AddStudentModal from "../components/AddStudentModal";
 import firebaseInstance from "../../../firebase_config";
 import StudentCard from "../components/StudentCard";
 import Pagination from "../components/Pagination";
-import BuildLists from "../components/BuildLists";
-import ChunkLists from "../components/ChunkLists";
+import Utilities from "../components/Utilities";
 import Search from "../components/Search";
 
 const ViewStudents = () => {
@@ -77,15 +76,15 @@ const ViewStudents = () => {
     }
 
     // 1. Build list for initial page load (no pagination needed)
-    document.querySelector('.directory-list').innerHTML = BuildLists(primaryListOfStudents);
+    document.querySelector('.directory-list').innerHTML = Utilities('build', primaryListOfStudents);
 
     // Listen for select list change event in order to chunk list and update pagination accordingly
     document.querySelector('.filter-select').addEventListener('change', (e) => {
 
-      let chunkedListOfStudents = ChunkLists(primaryListOfStudents, parseInt(e.target.value));
+      let chunkedListOfStudents = Utilities('chunk', primaryListOfStudents, parseInt(e.target.value));
 
       // Update list container with first index of chunked list
-      document.querySelector('.directory-list').innerHTML = BuildLists(chunkedListOfStudents[0]);
+      document.querySelector('.directory-list').innerHTML = Utilities('build', chunkedListOfStudents[0]);
 
       // Update pagination
       Pagination(true, Object.keys(resultsObj).length, parseInt(e.target.value), chunkedListOfStudents);

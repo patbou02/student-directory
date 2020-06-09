@@ -1,4 +1,4 @@
-import BuildLists from "./BuildLists";
+import Utilities from "./Utilities";
 
 const Pagination = (filter = false, totalSize, filterBy, arr) => {
 
@@ -50,7 +50,7 @@ const Pagination = (filter = false, totalSize, filterBy, arr) => {
       // Add 'active' to clicked pagination link
       e.target.parentElement.classList.add('active');
 
-      document.querySelector('.directory-list').innerHTML = BuildLists(arr[e.target.id]);
+      document.querySelector('.directory-list').innerHTML = Utilities('build', arr[e.target.id]);
     });
   });
 
