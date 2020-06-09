@@ -1,4 +1,4 @@
-import AddStudentModal from "../components/AddStudentModal";
+import StudentModal from "../components/StudentModal";
 import firebaseInstance from "../../../firebase_config";
 import StudentCard from "../components/StudentCard";
 import Pagination from "../components/Pagination";
@@ -34,7 +34,7 @@ const ViewStudents = () => {
 
   document.querySelector('#add-student').addEventListener('click', (e) => {
     e.preventDefault();
-    AddStudentModal();
+    StudentModal();
   });
 
   // Event Delegation

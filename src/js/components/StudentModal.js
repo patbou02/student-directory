@@ -1,7 +1,7 @@
 import firebaseInstance from "../../../firebase_config";
 import $ from 'jquery';
 
-const AddStudentModal = () => {
+const StudentModal = () => {
 
   const modalHTML = () => {
     return `
@@ -68,4 +68,4 @@ const AddStudentModal = () => {
   });
 };
 
-export default AddStudentModal;
+export default StudentModal;
