@@ -24,14 +24,6 @@ $gutter : 15px;
   li { margin-bottom: 1.25rem; }
   .col { display: flex; }
   .directory-card { flex-grow: 1; }
-  .card-body {
-    position: relative;
-    min-height: 178px;
-    .btn-container {
-      position: absolute;
-      bottom: 1.25rem;
-    }
-  }
 }
 
 .student-content {
@@ -47,4 +39,16 @@ $gutter : 15px;
 .directory-pagination {
   display: flex;
   justify-content: center;
+}
+
+.card {
+  &-body,
+  &-footer { padding: 1rem; }
+  &-img-wrapper {
+    display: block;
+    height: 208px;
+    overflow: hidden;
+  }
+  &-title { margin-bottom: 0; }
+  &-text { font-size: 14px; }
 }

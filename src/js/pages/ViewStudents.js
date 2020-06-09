@@ -3,6 +3,7 @@ import firebaseInstance from "../../../firebase_config";
 import StudentCard from "../components/StudentCard";
 import Pagination from "../components/Pagination";
 import BuildLists from "../components/BuildLists";
+import ChunkLists from "../components/ChunkLists";
 import Search from "../components/Search";
 
 const ViewStudents = () => {
@@ -63,26 +64,6 @@ const ViewStudents = () => {
     }
   });
 
-  const buildChunkedList = (arr, chunks) => {
-    let chunked_arr = [];
-    if (chunks !== 0) {
-      for (let i = 0; i < arr.length; i++) {
-        const last = chunked_arr[chunked_arr.length - 1];
-        if (!last || last.length === chunks) {
-          chunked_arr.push([arr[i]]);
-        } else {
-          if (i < arr.length) {
-            last.push(arr[i]);
-          }
-        }
-      }
-    } else {
-      chunked_arr = arr;
-    }
-
-    return chunked_arr;
-  };
-
   // set READ/GET operation to get existing Students from the 'students' table
   firebaseInstance.ref('students').on('value', (results) => {
     const resultsObj = results.val();
@@ -101,7 +82,7 @@ const ViewStudents = () => {
     // Listen for select list change event in order to chunk list and update pagination accordingly
     document.querySelector('.filter-select').addEventListener('change', (e) => {
 
-      let chunkedListOfStudents = buildChunkedList(primaryListOfStudents, parseInt(e.target.value));
+      let chunkedListOfStudents = ChunkLists(primaryListOfStudents, parseInt(e.target.value));
 
       // Update list container with first index of chunked list
       document.querySelector('.directory-list').innerHTML = BuildLists(chunkedListOfStudents[0]);
