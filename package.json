@@ -1,0 +1,38 @@
+{
+  "name": "student-directory",
+  "version": "1.0.0",
+  "description": "Student directory application",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "server": "node index.js",
+    "server_reload": "webpack-dev-server --mode-development",
+    "start": "npm run build && npm run server_reload"
+  },
+  "author": "Patrick Boutin",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "body-parser": "^1.18.3",
+    "bootstrap": "^4.5.0",
+    "copy-webpack-plugin": "^5.1.1",
+    "express": "^4.16.3",
+    "faker": "^4.1.0",
+    "firebase": "^7.14.5",
+    "jquery": "^3.5.1",
+    "popper.js": "^1.16.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.5.3",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.43.0",
+    "webpack-dev-server": "^3.11.0"
+  }
+}

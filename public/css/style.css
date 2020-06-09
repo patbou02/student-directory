@@ -1,0 +1,25 @@
+.directory-container,
+.directory-card,
+.directory-search-input {
+  margin-top: 20px;
+}
+
+.directory-container {
+  margin-bottom: 40px;
+}
+
+.directory-pagination {
+  margin-top: 40px;
+}
+
+.new-student-titles {
+  margin-top: 20px;
+}
+
+.new-student-titles:first-child {
+  margin-top: 0;
+}
+
+.new-student-inputs {
+  margin-top: 10px;
+}

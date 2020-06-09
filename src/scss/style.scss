@@ -1,0 +1,54 @@
+@import "~bootstrap/scss/bootstrap";
+
+$gutter : 15px;
+
+.row {
+  margin-left: -($gutter / 2);
+  margin-right: -($gutter / 2);
+}
+
+.row-cols {
+  &-1,
+  &-sm-2,
+  &-md-3,
+  &-lg-4 {
+    .col {
+      padding-left: ($gutter / 2);
+      padding-right: ($gutter / 2);
+    }
+  }
+}
+
+.directory-list {
+  ul { padding: 0; }
+  li { margin-bottom: 1.25rem; }
+  .col { display: flex; }
+  .directory-card { flex-grow: 1; }
+}
+
+.student-content {
+  .col,
+  .col-md-6,
+  .col-xl-4,
+  .col-xl-8 {
+    padding-left: ($gutter / 2);
+    padding-right: ($gutter / 2);
+  }
+}
+
+.directory-pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  &-body,
+  &-footer { padding: 1rem; }
+  &-img-wrapper {
+    display: block;
+    height: 208px;
+    overflow: hidden;
+  }
+  &-title { margin-bottom: 0; }
+  &-text { font-size: 14px; }
+}
